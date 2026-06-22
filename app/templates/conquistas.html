@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Conquistas{% endblock %}
+{% block topbar_title %}Conquistas{% endblock %}
+{% block nav_conquistas %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Conquistas</h1>
+    <p>Recompensas desbloqueadas ao longo da sua jornada.</p>
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Recompensa</th>
+                    <th>Data de Desbloqueio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conquista in conquistas %}
+                <tr>
+                    <td>{{ conquista.usuario }}</td>
+                    <td>
+                        <span style="display:inline-flex;align-items:center;gap:7px">
+                            <i class="bi bi-trophy-fill" style="color:var(--gold)"></i>
+                            <strong>{{ conquista.recompensa }}</strong>
+                        </span>
+                    </td>
+                    <td><span class="mono" style="font-size:13px">{{ conquista.data_desbloqueio }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-trophy" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Nenhuma conquista desbloqueada.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

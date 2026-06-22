@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Perfis{% endblock %}
+{% block topbar_title %}Perfis de Usuário{% endblock %}
+{% block nav_perfil %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Perfis de Usuário</h1>
+    <p>Informações e objetivos de cada participante.</p>
+</div>
+
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px">
+    {% for perfil in perfis %}
+    <div class="card-clean" style="padding:24px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+            <div style="width:46px;height:46px;border-radius:50%;background:var(--pale);border:2px solid var(--mint);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:18px;color:var(--forest);flex-shrink:0">
+                {{ perfil.apelido|first|upper }}
+            </div>
+            <div>
+                <div style="font-weight:600;color:var(--ink)">{{ perfil.apelido }}</div>
+                <div style="font-size:12px;color:var(--muted)">{{ perfil.usuario }}</div>
+            </div>
+        </div>
+        <div class="divider" style="margin:0 0 14px"></div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px;font-weight:600">Objetivo</div>
+        <div style="font-size:14px;color:var(--ink);margin-bottom:14px">{{ perfil.objetivo_pessoal }}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Progresso</span>
+            <span class="badge-clean badge-info">Nível {{ perfil.nivel_progresso }}</span>
+        </div>
+    </div>
+    {% empty %}
+    <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)">
+        <i class="bi bi-person-circle" style="font-size:36px;display:block;margin-bottom:10px;opacity:.3"></i>
+        Nenhum perfil cadastrado.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

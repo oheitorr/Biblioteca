@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Histórico{% endblock %}
+{% block topbar_title %}Histórico{% endblock %}
+{% block nav_historico %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Histórico</h1>
+    <p>Linha do tempo de eventos registrados no sistema.</p>
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for historico in historicos %}
+                <tr>
+                    <td>{{ historico.usuario }}</td>
+                    <td style="color:var(--muted)">{{ historico.descricao }}</td>
+                    <td><span class="badge-clean badge-neutral">{{ historico.tipo_evento }}</span></td>
+                    <td><span class="mono" style="font-size:13px">{{ historico.data_evento }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-clock-history" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Nenhum evento no histórico.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

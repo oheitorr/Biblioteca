@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Registro de Gatilhos{% endblock %}
+{% block topbar_title %}Registro de Gatilhos{% endblock %}
+{% block nav_reg_gatilhos %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Registro de Gatilhos</h1>
+    <p>Ocorrências documentadas de estímulos comportamentais.</p>
+</div>
+
+<div class="form-card" style="margin-bottom:24px">
+    {% if form.gatilho.field.queryset.count == 0 %}
+        <p style="color:var(--muted);font-size:14px">Você precisa <a href="{% url 'gatilhos' %}" style="color:var(--sage);font-weight:600">cadastrar um gatilho</a> antes de registrar uma ocorrência.</p>
+    {% else %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+            <button type="submit" class="btn-forest"><i class="bi bi-plus-lg"></i> Registrar Ocorrência</button>
+        </div>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr>
+                    <th>Gatilho</th>
+                    <th>Observação</th>
+                    <th>Data</th>
+                    <th style="text-align:right; padding-right:24px">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registros %}
+                <tr>
+                    <td>
+                        <span style="display:inline-flex;align-items:center;gap:6px">
+                            <i class="bi bi-lightning-fill" style="color:var(--amber);font-size:13px"></i>
+                            <strong>{{ registro.gatilho.nome }}</strong>
+                        </span>
+                    </td>
+                    <td style="color:var(--muted)">{{ registro.observacao }}</td>
+                    <td><span class="mono" style="font-size:13px">{{ registro.data }}</span></td>
+                    <td style="text-align:right; padding-right:20px">
+                        <a href="{% url 'deletar_registro_gatilho' registro.id %}" class="btn-danger-ghost" onclick="return confirm('Remover este registro?')">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-journal-text" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Nenhum registro encontrado.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,20 +1,33 @@
 from django.contrib import admin
+
 from .models import *
 
-admin.site.register(Cidade)
-admin.site.register(Editora)
-admin.site.register(Leitor)
-admin.site.register(Genero)
-admin.site.register(Livro)
-admin.site.register(Emprestimo)
+admin.site.register(Usuario)
 
-class LivroInline(admin.TabularInline):
-    model = Livro
-    extra = 1
+admin.site.register(Categoria)
 
-class AutorAdmin(admin.ModelAdmin):
-    list_display = ('nome',)
-    search_fields = ('nome',)
-    inlines = [LivroInline]
+admin.site.register(Vicio)
 
-admin.site.register(Autor, AutorAdmin)
+admin.site.register(Habito)
+
+admin.site.register(MetaUsuario)
+
+admin.site.register(Recaida)
+
+admin.site.register(Gatilho)
+
+admin.site.register(RegistroGatilho)
+
+admin.site.register(Rotina)
+
+admin.site.register(Tarefa)
+
+admin.site.register(Substituicao)
+
+admin.site.register(Recompensa)
+
+admin.site.register(Conquista)
+
+admin.site.register(Frase)
+
+admin.site.register(Historico)

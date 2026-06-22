@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Categorias{% endblock %}
+{% block topbar_title %}Categorias{% endblock %}
+{% block nav_categorias %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Categorias de Vício</h1>
+    <p>Classificação dos tipos de comportamento monitorados.</p>
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr><th>Nome da Categoria</th></tr>
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                <tr>
+                    <td>
+                        <span style="display:inline-flex;align-items:center;gap:8px">
+                            <i class="bi bi-tag-fill" style="color:var(--mint);font-size:13px"></i>
+                            <strong>{{ categoria.nome }}</strong>
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-tag" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Nenhuma categoria cadastrada.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

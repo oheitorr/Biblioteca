@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Recompensas{% endblock %}
+{% block topbar_title %}Recompensas{% endblock %}
+{% block nav_recompensas %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Recompensas</h1>
+    <p>Prêmios disponíveis para conquistar ao cumprir critérios.</p>
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Critério</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recompensa in recompensas %}
+                <tr>
+                    <td><strong>{{ recompensa.nome }}</strong></td>
+                    <td style="color:var(--muted)">{{ recompensa.descricao }}</td>
+                    <td><span class="badge-clean badge-info">{{ recompensa.criterio }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-gift" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>Nenhuma recompensa cadastrada.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

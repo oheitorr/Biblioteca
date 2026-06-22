@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Cadastrar Vício{% endblock %}
+{% block topbar_title %}Novo Vício{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Cadastrar Vício</h1>
+    <p>Registre um comportamento que deseja superar.</p>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:8px;">
+            <a href="/" class="btn-ghost">Cancelar</a>
+            <button type="submit" class="btn-forest">
+                <i class="bi bi-floppy"></i> Salvar Vício
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

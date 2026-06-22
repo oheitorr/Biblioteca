@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesVício — Cadastro</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --ink: #0e1a14; --forest: #0d4a2b; --sage: #1a7a45; --mint: #3cb870;
+            --pale: #e8f5ed; --paper: #f4f7f5; --cream: #fafcfb; --rule: #d0e4d8;
+            --muted: #5a7568; --danger: #c0392b;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--paper) 0%, var(--pale) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink);
+        }
+        .auth-card {
+            background: var(--cream);
+            border: 1px solid var(--rule);
+            border-radius: 20px;
+            padding: 40px 36px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 4px 24px rgba(13,74,43,.08);
+        }
+        .auth-logo {
+            font-family: var(--font-serif);
+            font-size: 30px;
+            color: var(--forest);
+            text-align: center;
+        }
+        .auth-sub {
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 28px;
+            margin-top: 2px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            border: 1.5px solid var(--rule);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--ink);
+            background: var(--paper);
+            outline: none;
+            transition: .15s;
+        }
+        .form-group input:focus {
+            border-color: var(--sage);
+            box-shadow: 0 0 0 3px rgba(26,122,69,.12);
+        }
+        .errorlist { list-style: none; color: var(--danger); font-size: 12px; margin-top: 4px; }
+        .non-field-errors { list-style: none; color: var(--danger); font-size: 13px; margin-bottom: 14px; background: #fde8e8; border: 1px solid #f5baba; border-radius: 8px; padding: 10px 14px; }
+        .btn-forest {
+            width: 100%;
+            padding: 11px;
+            background: var(--forest);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 6px;
+        }
+        .btn-forest:hover { background: var(--sage); }
+        .auth-footer {
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 20px;
+        }
+        .auth-footer a { color: var(--sage); font-weight: 600; text-decoration: none; }
+        .msg-box {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .msg-error { background: #fde8e8; color: var(--danger); border: 1px solid #f5baba; }
+        .msg-success { background: var(--pale); color: var(--forest); border: 1px solid var(--rule); }
+        .msg-warning { background: #fef3e0; color: #b8680f; border: 1px solid #f5d58a; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <div class="auth-logo">DesVício</div>
+    <div class="auth-sub">Crie sua conta e comece sua jornada de superação</div>
+
+    {% if messages %}
+        {% for message in messages %}
+        <div class="msg-box {% if message.tags == 'error' %}msg-error{% elif message.tags == 'warning' %}msg-warning{% else %}msg-success{% endif %}">
+            <i class="bi {% if message.tags == 'error' %}bi-x-circle-fill{% elif message.tags == 'warning' %}bi-exclamation-triangle-fill{% else %}bi-check-circle-fill{% endif %}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <ul class="non-field-errors">
+            {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-forest"><i class="bi bi-person-plus"></i> Criar Conta</button>
+    </form>
+
+    <div class="auth-footer">
+        Já tem uma conta? <a href="{% url 'login' %}">Entrar</a>
+    </div>
+</div>
+
+</body>
+</html>

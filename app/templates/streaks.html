@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Streaks{% endblock %}
+{% block topbar_title %}Streaks{% endblock %}
+{% block nav_streaks %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Streaks</h1>
+    <p>Sequências consecutivas de dias sem recaída, calculadas automaticamente a partir dos seus vícios.</p>
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Vício</th>
+                    <th>Dias Consecutivos</th>
+                    <th>Recorde Pessoal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for streak in streaks %}
+                <tr>
+                    <td>{{ streak.usuario }}</td>
+                    <td><strong>{{ streak.vicio }}</strong></td>
+                    <td>
+                        <span style="font-family:var(--font-mono); font-size:18px; font-weight:500; color:var(--sage)">
+                            {{ streak.dias_consecutivos }}
+                        </span>
+                        <span style="font-size:12px; color:var(--muted); margin-left:4px">dias</span>
+                    </td>
+                    <td>
+                        <span style="font-family:var(--font-mono); font-size:15px; color:var(--amber)">
+                            <i class="bi bi-trophy" style="font-size:13px; margin-right:3px"></i>{{ streak.recorde }} dias
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-fire" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>
+                    Nenhum streak para mostrar ainda. <a href="{% url 'criar_vicio' %}" style="color:var(--sage);font-weight:600">Cadastre um vício</a> para começar a acompanhar.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

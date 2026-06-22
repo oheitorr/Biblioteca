@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Progressos{% endblock %}
+{% block topbar_title %}Progressos{% endblock %}
+{% block nav_progressos %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Progressos</h1>
+    <p>Evolução quantitativa por vício monitorado, calculada automaticamente em relação a uma meta de 90 dias.</p>
+</div>
+
+<div class="card-clean">
+    <div class="table-responsive">
+        <table class="table-clean">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Vício</th>
+                    <th>Dias sem vício</th>
+                    <th>Evolução</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for progresso in progressos %}
+                <tr>
+                    <td>{{ progresso.usuario }}</td>
+                    <td><strong>{{ progresso.vicio }}</strong></td>
+                    <td>
+                        <span style="font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--sage)">
+                            {{ progresso.dias_sem_vicio }}
+                        </span>
+                        <span style="font-size:12px;color:var(--muted);margin-left:3px">dias</span>
+                    </td>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div style="flex:1;height:6px;background:var(--rule);border-radius:100px;overflow:hidden;min-width:80px">
+                                <div
+                                style="
+                                    height:100%;
+                                    width: {{ progresso.percentual_evolucao }}%;
+                                    background: var(--mint);
+                                    border-radius:100px;
+                                    transition: width .3s;
+                                ">
+                            </div>
+                            </div>
+                            <span class="mono" style="font-size:13px;color:var(--sage);min-width:38px">{{ progresso.percentual_evolucao }}%</span>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--muted)">
+                    <i class="bi bi-graph-up-arrow" style="font-size:28px;display:block;margin-bottom:8px;opacity:.4"></i>
+                    Nenhum progresso para mostrar ainda. <a href="{% url 'criar_vicio' %}" style="color:var(--sage);font-weight:600">Cadastre um vício</a> para começar a acompanhar.
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

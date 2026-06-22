@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Editar Vício{% endblock %}
+{% block topbar_title %}Editar Vício{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Editar Vício</h1>
+    <p>Atualize as informações sobre este comportamento.</p>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:8px;">
+            <a href="/" class="btn-ghost">Cancelar</a>
+            <button type="submit" class="btn-forest">
+                <i class="bi bi-check-lg"></i> Atualizar Dados
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

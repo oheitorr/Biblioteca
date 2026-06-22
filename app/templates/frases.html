@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Frases Motivacionais{% endblock %}
+{% block topbar_title %}Frases Motivacionais{% endblock %}
+{% block nav_frases %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Frases Motivacionais</h1>
+    <p>Citações para manter o foco na jornada.</p>
+</div>
+
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:16px">
+    {% for frase in frases %}
+    <div class="card-clean" style="padding:24px">
+        <blockquote style="margin:0;padding:0;font-family:var(--font-serif);font-size:18px;color:var(--ink);line-height:1.5;font-style:italic">
+            "{{ frase.frase }}"
+        </blockquote>
+        <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:600;color:var(--forest)">— {{ frase.autor }}</span>
+            <span class="badge-clean badge-neutral">{{ frase.categoria }}</span>
+        </div>
+    </div>
+    {% empty %}
+    <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)">
+        <i class="bi bi-quote" style="font-size:36px;display:block;margin-bottom:10px;opacity:.3"></i>
+        Nenhuma frase cadastrada.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
